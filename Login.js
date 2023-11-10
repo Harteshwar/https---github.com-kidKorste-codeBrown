@@ -1,3 +1,5 @@
+//Login.js
+
 import React, { useState } from 'react';
 import {
   View,
@@ -9,26 +11,20 @@ import {
   Keyboard
 } from 'react-native';
 
-const SignUp = ({ navigation }) => {
+const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleSignUp = () => {
-    if (password === confirmPassword) {
-      alert('Signup successful!');
+  const handleSignIn = () => {
       navigation.navigate('Dashboard'); // Navigate to Dashboard when signup is successful
-    } else {
-      alert('Passwords do not match!');
-    }
   };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-    <View style={styles.container}>
+      <View style={styles.container}>
       <Text style={styles.logoText}>Round Table Pizza</Text>
-      <Text style={styles.title}>Sign Up</Text>
+      <Text style={styles.title}>Login</Text>
 
       <TextInput
         style={styles.input}
@@ -47,15 +43,6 @@ const SignUp = ({ navigation }) => {
         value={password}
       />
 
-      <TextInput
-        style={styles.input}
-        placeholder="Confirm Password"
-        placeholderTextColor="#666"
-        secureTextEntry={!showPassword}
-        onChangeText={(text) => setConfirmPassword(text)}
-        value={confirmPassword}
-      />
-
       <TouchableOpacity
         onPress={() => setShowPassword(!showPassword)}
         style={styles.showPasswordButton}
@@ -65,12 +52,18 @@ const SignUp = ({ navigation }) => {
         </Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.button} onPress={handleSignUp}>
-        <Text style={styles.buttonText}>Sign Up</Text>
+      <TouchableOpacity style={styles.button} onPress={handleSignIn}>
+        <Text style={styles.buttonText}>Sign In</Text>
       </TouchableOpacity>
-    </View>
 
+      <TouchableOpacity style={styles.text} onPress={handleSignIn}>
+        <Text style={styles.text}>Forgot password?</Text>
+      </TouchableOpacity>
+
+      </View>
+      
     </TouchableWithoutFeedback>
+
   );
 };
 
@@ -113,6 +106,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     width: 300,
     alignItems: 'center',
+    marginBottom: 30,
   },
   buttonText: {
     color: '#fff',
@@ -120,4 +114,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SignUp;
+export default Login;
