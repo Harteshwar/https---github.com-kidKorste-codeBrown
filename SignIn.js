@@ -1,45 +1,23 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, TouchableWithoutFeedback, Keyboard} from 'react-native';
 import app from './firebaseConfig'; 
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigation } from '@react-navigation/native';
 
-const SignUp = () => {
+const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false); // Added showPassword state for both fields
+  const [showPassword, setShowPassword] = useState(false); // Added showPassword state
   const navigation = useNavigation();
 
-  const handleSignUp = () => {
-    // Email validation
-    const emailRegex = /\S+@\S+\.\S+/;
-    if (!emailRegex.test(email)) {
-      Alert.alert('Invalid Email', 'Please enter a valid email address.');
-      return;
-    }
-
-    // Password validation
-    if (password.length < 6) {
-      Alert.alert('Weak Password', 'Password should be at least 6 characters.');
-      return;
-    }
-
-    // Confirm password validation
-    if (password !== confirmPassword) {
-      Alert.alert('Password Mismatch', 'Passwords do not match!');
-      return;
-    }
-
-    // Firebase sign-up function
+  const handleSignIn = () => {
     const auth = getAuth(app);
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        Alert.alert('Success', 'Account created successfully!');
-        navigation.navigate('SignIn');
+    signInWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        // Navigate to dashboard 
       })
       .catch((error) => {
-        Alert.alert('Error', error.message);
+        Alert.alert('Sign In Failed', error.message);
       });
   };
 
@@ -47,7 +25,7 @@ const SignUp = () => {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
     <View style={styles.container}>
       <Text style={styles.logoText}>Round Table Pizza</Text>
-      <Text style={styles.title}>Sign Up</Text>
+      <Text style={styles.title}>Sign In</Text>
 
       <TextInput
         style={styles.input}
@@ -75,30 +53,18 @@ const SignUp = () => {
         </TouchableOpacity>
       </View>
 
-      <View style={styles.passwordContainer}>
-        <TextInput
-          style={styles.passwordInput}
-          placeholder="Confirm Password"
-          placeholderTextColor="#666"
-          secureTextEntry={!showPassword} // Toggle secureTextEntry based on showPassword
-          onChangeText={setConfirmPassword}
-          value={confirmPassword}
-        />
-        <TouchableOpacity
-          style={styles.showPasswordButton}
-          onPress={() => setShowPassword(!showPassword)} // Toggle showPassword for confirm password field
-        >
-          <Text>{showPassword ? 'Hide' : 'Show'}</Text>
-        </TouchableOpacity>
-      </View>
-
-      <TouchableOpacity style={styles.button} onPress={handleSignUp}>
-        <Text style={styles.buttonText}>Sign Up</Text>
+      <TouchableOpacity style={styles.button} onPress={handleSignIn}>
+        <Text style={styles.buttonText}>Sign In</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => navigation.navigate('SignIn')}>
-        <Text style={styles.switchText}>Already have an account? Sign In</Text>
+      <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
+        <Text style={styles.switchText}>Don't have an account? Sign Up</Text>
       </TouchableOpacity>
+
+      <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}> 
+        <Text style={styles.switchText}>Forgot Password?</Text> 
+      </TouchableOpacity>
+      
     </View>
     </TouchableWithoutFeedback>
   );
@@ -167,4 +133,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SignUp;
+export default SignIn;
