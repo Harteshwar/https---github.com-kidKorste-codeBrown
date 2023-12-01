@@ -106,6 +106,7 @@ Email Address: hsghuman02@gmail.com
 - [@alexfakai](https://github.com/alexfakai)
 - [@akashdeep42](https://github.com/akashdeep42)
 - [@saulb99](https://github.com/saulb99)
+- [@ikjxt](https://github.com/ikjxt)
 
 
 This project is part of the Senior Project by Team Code Brown.
