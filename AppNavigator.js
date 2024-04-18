@@ -54,7 +54,7 @@ function AuthenticatedTabs({ role,userId }) {
       {/* Define the screens as Tab Screens */}
       <Tab.Screen name="Dashboard" component={Dashboard} />
       <Tab.Screen name="Contacts" component={ContactsScreen} />
-      <Tab.Screen name="TakeOrder" component={TakeOrderScreen} />
+      <Tab.Screen name="TakeOrder" component={TakeOrderScreen} options={{ tabBarLabel: 'Take Order' }}/> 
       <Tab.Screen name="Profile" component={UserProfileScreen} />
       {role === 'manager' && <Tab.Screen name="Log" component={driverselection} />}
 
@@ -103,9 +103,7 @@ function AppNavigator({ isAuthenticated }) {
         const docRef = doc(db, 'USERS', user.email);  
         const docSnap = await getDoc(docRef);
 
-        setRole(docSnap.data().role);  // [4/10] Is this line needed? setRole() is called in line 112. 
-                                       // OR maybe only need this line and take away the whole if/else statement because the way the 
-                                       // app and firestore is setup, *if (user)* will always be true here so there will always be a doc
+        setRole(docSnap.data().role);
 
         if (docSnap.exists()) {
           const Data = docSnap.data();
@@ -134,10 +132,10 @@ function AppNavigator({ isAuthenticated }) {
             </Stack.Screen>
             <Stack.Screen name="ContactsScreen" component={ContactsScreen} />
             <Stack.Screen name="ChatScreen" component={ChatScreen} />
-            <Stack.Screen name="Location History" component={LocationHistoryScreen} />
+            <Stack.Screen name="LocationHistoryScreen" component={LocationHistoryScreen} />
             <Stack.Screen name="TakeOrderScreen" component={TakeOrderScreen} />
             <Stack.Screen name="UserProfileScreen" component={UserProfileScreen} />
-            <Stack.Screen name="Edit Profile" component={EditProfileScreen} />
+            <Stack.Screen name="EditProfileScreen" component={EditProfileScreen} />
             <Stack.Screen name="Enter Current Password" component={ChangePasswordScreen} />
             <Stack.Screen name="Enter New Password" component={ChangePasswordScreen2} />
             <Stack.Screen name="Enter Current Password " component={ChangeEmailScreen} />
